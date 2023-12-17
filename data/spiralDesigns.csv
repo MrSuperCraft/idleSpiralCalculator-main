@@ -1,0 +1,38 @@
+name,unlockMethod,activeEffect,passiveEffect
+* Simple Blue,-,a +10%,-
+* Simple Yellow,-,b +10%,-
+* Simple Red,-,c +10%,-
+* Simple Violet,-,d +10%,-
+* Simple White,-,e +10%,-
+* Blue & Green,300 SP,HP +50%,HP +10%
+* Yellow & Red,300 SP,ATK +50%,ATK +10%
+* Red & Blue,300 SP,DEF +50%,DEF +10%
+* Violet & Pink,300 SP,Crit Rate +5%,Crit Rate +1%
+* Violet & Pink,300 SP,Crit Damage +20%,Crit Damage +5%
+** White Circles,400 SP,Regenerate while Resting +200%,Regenerate while Resting +50%
+** Green & Pink Circles,400 SP,DEF +30% | Regenerate while Resting +50%,DEF +5% | Regenerate while Resting +10%
+** Cyan & Red Circles,400 SP,ATK +30% | Regenerate while Resting +50%,ATK +5% | Regenerate while Resting +10%
+** Blue Dottered Line,500 SP,Line Number Multiplier +100%,Line Number Multiplier +25%
+** White Dottered Line,500 SP,Line Number Multiplier +25%,a +5% | b +5% | c +5% | Line Number Multiplier +10%
+** Orange & Blue Dottered Line,500 SP,Line Number Multiplier +25%,d +5% | e +5% | f+5% | Line Number Multiplier +10%
+** Cyan & Pink Stripe,1K SP,v +5,v +2
+** Blue & Violet Stripe,1K SP,ATK Reward +5,ATK Reward +2
+** Green & Orange Stripe,1K SP,DEF Reward +5,DEF Reward +2
+*** Green Winding,2K SP,Exp Reward +3,Exp Reward +1
+*** White & Red Winding,2K SP,Exp Reward +10%,Exp Reward +3%
+*** Orange & Purple Winding,2K SP,ATK +100% | DEF +100% | HP +100%,ATK +30% | DEF +30% | HP +30%
+*** π,Basic Challenge,Ω +50%,Ω +20%
+*** Diamond,Drunk Challenge,Exp Reward +5%,Exp Reward +3%
+*** Rainbow,Flower Challenge,Spiral Equation Speed +100%,Spiral Equation Speed +50%
+*** Kanii,Slow Spiral Challenge,δ +100%,Spiral Equation Slot +1
+*** Rahmen,Straight Line Challenge,γ +50%,γ +20%
+*** Laser,Poor Math Challenge,Z-Reactor Exp +50%,Z-Reactor Exp +20%
+*** Qinghai Wave,No Rebirth Challenge,α +0.02,α +0.01
+*** Cloisonne,Sinkhole Challenge,β +0.02,β +0.01
+*** Lamé,Sphere Challenge,Math Skill +1K,Math Skill +200
+DLC Bubble,DLC,Rare Drop Rate +100%,Rare Drop Rate +100%
+DLC Snake,DLC,S-Critical Rate +16%,S-Critical Rate +6%
+DLC Arrow,DLC,Attack Speed +20%,Attack Speed +10%
+DLC Space,DLC,ω +10%,ω +10%
+DLC Water,DLC,Line Number Refill speed +50%,Line Number Multiplier automatically starts when full
+DLC Bonfire,DLC,Enables the generation of experience over time that increases the passive effect.,Reward Multiplier + 20%

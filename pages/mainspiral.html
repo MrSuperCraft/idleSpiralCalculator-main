@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>Battle</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon_io/site.webmanifest">
+</head>
+<body>
+    <a href="../index.html"><button id="returnButton">Return to Menu</button></a>
+    <h1>Main spiral</h1>
+    <div class="tab-container">
+        <div class="tab" onclick="showTab('Main')">Main</div>
+        <div class="tab" onclick="showTab('TornadoPrestige')">Tornado Prestige</div>
+    </div>
+
+    <div id="Main" class="tab-content show">
+        <p>Main</p>
+    </div>
+
+    <div id="TornadoPrestige" class="tab-content">
+        <p>TornadoPrestige</p>
+
+    </div>
+
+    <footer>
+        <div id="footerContent">
+            <p>&copy; 2023 anto1n3c. Contact me on discord: anto1n3c</p>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            var tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(function(tab) {
+                if (tab.id === tabId) {
+                    tab.classList.add('show');
+                } else {
+                    tab.classList.remove('show');
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>

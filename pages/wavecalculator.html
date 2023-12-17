@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon_io/site.webmanifest">
+    <style>
+        table.wavetable {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            table-layout: fixed;
+        }
+    
+        th, td {
+            border: 1px solid #444;
+            text-align: left;
+            padding: 10px;
+        }
+    
+        th {
+            background-color: #383838;
+            color: #fff;
+        }
+    
+        button {
+            padding: 15px;
+            font-size: 18px;
+            background-color: #5e548e;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #5e548e;
+        }
+    
+        .info-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            color: #fff;
+            background-color: #5e548e;
+            text-align: center;
+            line-height: 16px;
+            border-radius: 50%;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    
+        .info-tooltip {
+            color: #5e548e;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            max-width: 450px;
+            border-radius: 5px;
+            display: none;
+        }
+        select {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    
+    </style>
+    <title>Idle Spiral calculator - Wave calculator</title>
+</head>
+<body>
+    <a href="../index.html"><button id="returnButton">Return to Menu</button></a>
+    <h1>Wave calculator</h1>
+
+    <div class="input-container">
+        <div>
+            <label for="basedamageInput">Damage (e.g., 1.30e+49):</label>
+            <span class="info-icon" onmouseover="showInfo('basedamageInfo')" onmouseout="hideInfo('basedamageInfo')">i</span>
+            <div class="info-tooltip" id="basedamageInfo">You need to select your multiattack on the right selector.</div>
+            <input type="text" id="basedamageInput">
+        </div>
+        <div>
+        <label for="multiattackSelector">Multiattack (1-3):</label>
+        <select id="multiattackSelector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+      </div>
+        <div>
+            <label for="basecritInput">Crit Damage (e.g., 1.46e+63):</label>
+            <input type="text" id="basecritInput">
+        </div>
+        <div>
+            <label for="basesupercritInput">S-Crit Damage (e.g., 3.49e+74):</label>
+            <input type="text" id="basesupercritInput">
+        </div>
+    </div>
+
+    <div class="input-container">
+        <div>
+            <label for="playerGrowthReductionInput">GrowthReduction (e.g., 0.00735):</label>
+            <input type="text" id="playerGrowthReductionInput">
+        </div>
+        <div>
+            <label for="playerRDEInput">Debuff (e.g., 23.55398):</label>
+            <span class="info-icon" onmouseover="showInfo('playerRDEInfo')" onmouseout="hideInfo('playerRDEInfo')">i</span>
+            <div class="info-tooltip" id="playerRDEInfo">Do not include the % .</div>
+            <input type="text" id="playerRDEInput">
+        </div>
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <table class="wavetable">
+        <thead>
+            <tr>
+                <th>Enemy</th>
+                <th>Base HP</th>
+                <th>Wave (Damage)</th>
+                <th>Wave (Crit)</th>
+                <th>Wave (SCrit)</th>
+            </tr>
+        </thead>
+        <tbody id="enemyRows"></tbody>
+    </table>
+
+    <script>
+
+        function showInfo(id) {
+                var tooltip = document.getElementById(id);
+                tooltip.style.display = 'block';
+            }
+
+        function hideInfo(id) {
+            var tooltip = document.getElementById(id);
+            tooltip.style.display = 'none';
+            }
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInput();
+        });
+
+        function loadUserInput() {
+            var basedamageInput = localStorage.getItem('basedamageInput');
+            var basecritInput = localStorage.getItem('basecritInput');
+            var basesupercritInput = localStorage.getItem('basesupercritInput');
+            var playerGrowthReductionInput = localStorage.getItem('playerGrowthReductionInput');
+            var playerRDEInput = localStorage.getItem('playerRDEInput');
+            var multiattackSelector = localStorage.getItem('multiattackSelector'); 
+
+            document.getElementById('basedamageInput').value = basedamageInput || '1.30e+49';
+            document.getElementById('basecritInput').value = basecritInput || '1.46e+63';
+            document.getElementById('basesupercritInput').value = basesupercritInput || '3.49e+74';
+            document.getElementById('playerGrowthReductionInput').value = playerGrowthReductionInput || '0.00735';
+            document.getElementById('playerRDEInput').value = playerRDEInput || '23.55398';
+            document.getElementById('multiattackSelector').value = multiattackSelector || '1'; 
+        }
+
+        function saveUserInput() {
+            localStorage.setItem('basedamageInput', document.getElementById('basedamageInput').value);
+            localStorage.setItem('basecritInput', document.getElementById('basecritInput').value);
+            localStorage.setItem('basesupercritInput', document.getElementById('basesupercritInput').value);
+            localStorage.setItem('playerGrowthReductionInput', document.getElementById('playerGrowthReductionInput').value);
+            localStorage.setItem('playerRDEInput', document.getElementById('playerRDEInput').value);
+            localStorage.setItem('multiattackSelector', document.getElementById('multiattackSelector').value);
+        }
+
+        function calculate() {
+            var basedamageInput = document.getElementById('basedamageInput').value;
+            var basecritInput = document.getElementById('basecritInput').value;
+            var basesupercritInput = document.getElementById('basesupercritInput').value;
+            var playerGrowthReductionInput = document.getElementById('playerGrowthReductionInput').value;
+            var playerRDEInput = document.getElementById('playerRDEInput').value;
+            var multiattackSelector = document.getElementById('multiattackSelector');
+            
+
+            playerRDEInput = playerRDEInput / 100;
+
+            var basedamage = parseFloat(basedamageInput);
+            var basecrit = parseFloat(basecritInput);
+            var basesupercrit = parseFloat(basesupercritInput);
+            var playerGrowthReduction = parseFloat(playerGrowthReductionInput);
+            var playerRDE = parseFloat(playerRDEInput);
+            var multiattack = parseInt(multiattackSelector.value);
+
+            if (isNaN(basecrit) || isNaN(basesupercrit) || isNaN(playerGrowthReduction)) {
+                alert("Invalid input. Please enter valid numeric values.");
+                return;
+            }
+
+            saveUserInput();
+
+            var enemies = [
+            { name: 'Training', baseHP: 8.50e+01 },
+            { name: 'Kappa', baseHP: 5.95e+03 }, 
+            { name: 'Alpha', baseHP: 8.50e+04 },
+            { name: 'Beta', baseHP: 8.50e+07 },
+            { name: 'Pi', baseHP: 8.50e+10 },
+            { name: 'Gamma', baseHP: 4.25e+14 },
+            { name: 'Napier', baseHP: 2.32e+18 },
+            { name: 'Varman', baseHP: 1.05e+22 },
+            { name: 'Pentacle', baseHP: 4.73e+23 },
+            { name: 'Fibanomnom', baseHP: 9.55e+37 },
+            { name: 'Spi', baseHP: 8.50e+49 },
+            { name: 'QQ', baseHP: 3.40e+40 },
+            { name: '∮', baseHP: 3.19e+05 }
+            ];
+
+            var tbody = document.getElementById('enemyRows');
+            tbody.innerHTML = '';
+
+            function calculateDamage(enemy, growthReduction, columnPrefix) {
+                var critDamage;
+                var supercritDamage;
+                var damage;
+
+                var totalDamage = basedamage * (1 + multiattack);
+
+                if (enemy.name === 'QQ') {
+                    damage = Math.log(totalDamage / enemy.baseHP) / Math.log(1 + 1000 * playerRDE * 0.05 * playerGrowthReduction);
+                    critDamage = Math.log(basecrit / enemy.baseHP) / Math.log(1 + 1000 * playerRDE * 0.05 * playerGrowthReduction);
+                    supercritDamage = Math.log(basesupercrit / enemy.baseHP) / Math.log(1 + 1000 * playerRDE * 0.05 * playerGrowthReduction);
+                } else if (enemy.name === '∮') {
+                    damage = 0;
+                    critDamage = 0;
+                    supercritDamage = 0;
+                } else {
+                    damage = Math.log10(totalDamage / enemy.baseHP) / Math.log10(1 + 0.05 * growthReduction);
+                    critDamage = Math.log10(basecrit / enemy.baseHP) / Math.log10(1 + 0.05 * growthReduction);
+                    supercritDamage = Math.log10(basesupercrit / enemy.baseHP) / Math.log10(1 + 0.05 * growthReduction);
+                }
+
+               
+                var damageText = damage < 0 ? "<span style='color: red;'>Impossible</span>" : damage.toFixed(0);
+                var critDamageText = critDamage < 0 ? "<span style='color: red;'>Impossible</span>" : critDamage.toFixed(0);
+                var supercritDamageText = supercritDamage < 0 ? "<span style='color: red;'>Impossible</span>" : supercritDamage.toFixed(0);
+
+
+                var row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${enemy.name}</td>
+                    <td id="baseHP${enemy.name}">${enemy.baseHP.toExponential(2)}</td>
+                    <td id="damage${enemy.name}">${damageText}</td>
+                    <td id="critDamage${enemy.name}">${critDamageText}</td>
+                    <td id="superCritDamage${enemy.name}">${supercritDamageText}</td>
+                `;
+
+                tbody.appendChild(row);
+            }
+
+            enemies.forEach(function(enemy) {
+                calculateDamage(enemy, playerGrowthReduction, '');
+            });
+        }
+    </script>
+    <footer>
+        <div id="footerContent">
+            <p>&copy; 2023 anto1n3c. Contact me on discord: anto1n3c</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>Idle Spiral Wiki - Battle Upgrades and Reward</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon_io/site.webmanifest">
+</head>
+<body>
+    <a href="../index.html"><button id="returnButton">Return to Menu</button></a>
+    <h1>Battle Upgrades and Rewards</h1>
+    <div class="tab-container">
+        <div class="tab" onclick="showTab('tabBattleUpgrades')">Battle Upgrades</div>
+        <div class="tab" onclick="showTab('tabBattleRewards')">Battle Rewards</div>
+    </div>
+
+    <div id="tabBattleUpgrades" class="tab-content show">
+        <p>Be careful the maximum number of upgrades is displayed with upgrades numbers 25 and 42 at the maximum level.</p>
+        <table id="battleUpgradesTable">
+            <thead>
+                <tr>
+                    <th>Upgrade Number</th>
+                    <th>max number of upgrade</th>
+                    <th>Effect</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+            <tbody id="battleUpgradesBody"></tbody>
+        </table>
+    </div>
+
+    <div id="tabBattleRewards" class="tab-content">
+        <p>if you have the missing information from the table send it to me on discord.</p>
+        <table id="battleRewardsTable">
+            <thead>
+                <tr>
+                    <th>Enemy</th>
+                    <th>Drop</th>
+                    <th>Weight</th>
+                    <th>Total Weight</th>
+                </tr>
+            </thead>
+            <tbody id="battleRewardsBody"></tbody>
+        </table>
+    </div>
+
+    <footer>
+        <div id="footerContent">
+            <p>&copy; 2023 anto1n3c. Contact me on discord: anto1n3c</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <script>
+        function showTab(tabId) {
+            var tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(function(tab) {
+                if (tab.id === tabId) {
+                    tab.classList.add('show');
+                } else {
+                    tab.classList.remove('show');
+                }
+            });
+        }
+
+        Papa.parse('../data/battleUpgrades.csv', {
+            header: true,
+            download: true,
+            dynamicTyping: true,
+            complete: function (results) {
+                var battleUpgrades = results.data;
+                populateBattleUpgradesTable(battleUpgrades);
+            }
+        });
+
+        function createBattleUpgradesRow(upgrade) {
+            var row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${upgrade.number}</td>
+                <td>${upgrade.maxNumber}</td>
+                <td>${upgrade.effect}</td>
+                <td>${upgrade.cost}</td>
+            `;
+            return row;
+        }
+
+        function populateBattleUpgradesTable(data) {
+            var tbody = $('#battleUpgradesBody');
+
+            data.forEach(function (upgrade) {
+                var row = createBattleUpgradesRow(upgrade);
+                tbody.append(row);
+            });
+        }
+
+        Papa.parse('../data/battleRewards.csv', {
+            header: true,
+            download: true,
+            dynamicTyping: true,
+            complete: function (results) {
+                var battleRewards = results.data;
+                populateBattleRewardsTable(battleRewards);
+            }
+        });
+
+        function createBattleRewardsRow(reward) {
+            var row = document.createElement('tr');
+            var nameCell = document.createElement('td');
+            var dropCell = document.createElement('td');
+            var weightCell = document.createElement('td');
+            var totalWeightCell = document.createElement('td');
+
+            var dropParts = reward.drop.split(', ');
+            dropParts.forEach(function(part, index) {
+                dropCell.innerHTML += part.trim(); 
+                if (index < dropParts.length - 1) {
+                    dropCell.innerHTML += '<br>';
+                }
+            });
+
+            var weightParts = reward.weight.split(', ');
+            weightParts.forEach(function(part, index) {
+                weightCell.innerHTML += part.trim(); 
+                if (index < weightParts.length - 1) {
+                    weightCell.innerHTML += '<br>'; 
+                }
+            });
+
+            totalWeightCell.textContent = reward.totalWeight;
+            nameCell.textContent = reward.name;
+
+            row.appendChild(nameCell);
+            row.appendChild(dropCell);
+            row.appendChild(weightCell);
+            row.appendChild(totalWeightCell);
+
+            return row;
+        }
+
+        function populateBattleRewardsTable(data) {
+            var tbody = $('#battleRewardsBody');
+
+            tbody.empty();
+
+            data.forEach(function (reward) {
+                var row = createBattleRewardsRow(reward);
+                tbody.append(row);
+            });
+        }
+    </script>
+</body>
+</html>
