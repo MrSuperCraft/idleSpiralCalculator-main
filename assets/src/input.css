@@ -1,9 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
-    background-color: #222;
-    text-align: center;
-    min-height: 100vh;
     color: #fff;
 }
 
@@ -111,27 +111,9 @@ input {
 
 footer {
     margin-top: auto; 
-    margin-bottom: 1vh;
 }
 
 a {
     text-decoration: none;
     color: #fff;
-}
-
-#game-explanation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 30px;
-}
-
-#game-explanation img {
-    max-width: 50%; 
-    margin-bottom: 20px; 
-}
-
-#game-explanation p {
-    max-width: 50%; 
 }

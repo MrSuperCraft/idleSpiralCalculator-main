@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="/dist/output.css">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
@@ -76,11 +76,11 @@
     </style>
     <title>Idle Spiral calculator - Wave calculator</title>
 </head>
-<body>
-    <a href="../index.html"><button id="returnButton">Return to Menu</button></a>
+<body class="min-h-screen bg-gradient-to-br from-neutral-800 to-stone-900 text-center">
+    <a href="index.html"><button id="returnButton">Return to Menu</button></a>
     <h1>Wave calculator</h1>
 
-    <div class="input-container">
+    <div class="input-container mt-32 w-4/5 mx-auto">
         <div>
             <label for="basedamageInput">Damage (e.g., 1.30e+49):</label>
             <span class="info-icon" onmouseover="showInfo('basedamageInfo')" onmouseout="hideInfo('basedamageInfo')">i</span>
